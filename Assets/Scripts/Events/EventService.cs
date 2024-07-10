@@ -7,15 +7,19 @@ using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Events
 {
-    public class EventService : GenericMonoSingleton<EventService>
+    public class EventService
     {
         public GameEventController<int> OnMapSelected { get; private set; }
-
-        protected override void Awake()
+        
+        /*protected override void Awake()
         {
             base.Awake();
             OnMapSelected = new GameEventController<int>();
+        }*/
+
+        public EventService()
+        {
+            OnMapSelected = new GameEventController<int>();
         }
-        
     }
 }
