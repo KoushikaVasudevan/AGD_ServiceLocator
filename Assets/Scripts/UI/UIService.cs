@@ -52,7 +52,16 @@ namespace ServiceLocator.UI
             SubscribeToEvents();
         }
 
-        public void SubscribeToEvents() => GameService.Instance.eventService.OnMapSelected.AddListener(OnMapSelected);
+        public void SubscribeToEvents()
+        {
+            GameService gameService = GameService.Instance;
+
+            Debug.Log("gameService" + (gameService != null));
+            Debug.Log("eventService" + (gameService.eventService != null));
+            Debug.Log("OnMapSelected" + (gameService.eventService.OnMapSelected != null));
+
+            gameService.eventService.OnMapSelected.AddListener(OnMapSelected);
+        }
 
         public void OnMapSelected(int mapID)
         {

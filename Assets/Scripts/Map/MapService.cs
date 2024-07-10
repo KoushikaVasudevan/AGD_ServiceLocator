@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using ServiceLocator.Utilities;
 using ServiceLocator.Player;
-using ServiceLocator.Events;
 
 namespace ServiceLocator.Map
 {
