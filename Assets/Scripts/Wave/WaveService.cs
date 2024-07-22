@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using ServiceLocator.Wave.Bloon;
 using System.Threading.Tasks;
 using ServiceLocator.UI;
@@ -64,7 +65,7 @@ namespace ServiceLocator.Wave
 
         public async void SpawnBloons(List<BloonType> bloonsToSpawn, Vector3 spawnPosition, int startingWaypointIndex, float spawnRate)
         {
-            foreach(BloonType bloonType in bloonsToSpawn)
+            foreach (BloonType bloonType in bloonsToSpawn)
             {
                 BloonController bloon = bloonPool.GetBloon(bloonType);
                 bloon.SetPosition(spawnPosition);
@@ -90,10 +91,15 @@ namespace ServiceLocator.Wave
                 soundService.PlaySoundEffects(Sound.SoundType.WaveComplete);
                 uiService.UpdateWaveProgressUI(currentWaveId, waveDatas.Count);
 
-                if(IsLevelWon())
+                if (IsLevelWon())
+                {
                     uiService.UpdateGameEndUI(true);
+                    mapService.EnableNextMap();
+                }
                 else
+                {
                     uiService.SetNextWaveButton(true);
+                }
             }
         }
 
@@ -101,6 +107,9 @@ namespace ServiceLocator.Wave
 
         private bool HasCurrentWaveEnded() => activeBloons.Count == 0;
 
-        private bool IsLevelWon() => currentWaveId >= waveDatas.Count;
+        private bool IsLevelWon()
+        {
+            return (currentWaveId >= waveDatas.Count);
+        }
     }
 }

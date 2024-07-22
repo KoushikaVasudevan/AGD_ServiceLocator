@@ -50,6 +50,11 @@ namespace ServiceLocator.UI
             playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
         }
 
+        public List <MapButton> GetMapButtons()
+        {
+            return mapButtons;
+        }
+
         public void Init(WaveService waveService, PlayerService playerService, EventService eventService)
         {
             this.waveService = waveService;
@@ -95,7 +100,10 @@ namespace ServiceLocator.UI
 
         private void OnQuitButtonClicked() => Application.Quit();
 
-        private void OnPlayAgainButtonClicked() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        private void OnPlayAgainButtonClicked() 
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        } 
 
         public void SetNextWaveButton(bool setInteractable) => nextWaveButton.interactable = setInteractable;
 

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using ServiceLocator.Main;
 using ServiceLocator.Player;
 using ServiceLocator.Events;
+using ServiceLocator.UI;
 
 namespace ServiceLocator.Map
 {
@@ -11,6 +13,7 @@ namespace ServiceLocator.Map
     {
         // Dependencies:
         private EventService eventService;
+        private UIService uiService;
         private MapScriptableObject mapScriptableObject;
 
         private Grid currentGrid;
@@ -25,9 +28,10 @@ namespace ServiceLocator.Map
             ResetTileOverlay();
         }
 
-        public void Init(EventService eventService)
+        public void Init(EventService eventService, UIService uiService)
         {
             this.eventService = eventService;
+            this.uiService = uiService;
             SubscribeToEvents();
         }
 
@@ -38,6 +42,13 @@ namespace ServiceLocator.Map
             currentMapData = mapScriptableObject.MapDatas.Find(mapData => mapData.MapID == mapId);
             currentGrid = Object.Instantiate(currentMapData.MapPrefab);
             currentTileMap = currentGrid.GetComponentInChildren<Tilemap>();
+        }
+
+        public void EnableNextMap()
+        {
+            List<MapButton> mapbuttons = uiService.GetMapButtons();
+
+            mapbuttons[1].GetComponent<Button>().interactable = true;
         }
 
         public List<Vector3> GetWayPointsForCurrentMap() => currentMapData.WayPoints;
